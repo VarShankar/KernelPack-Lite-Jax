@@ -15,7 +15,7 @@ def legendre_poly(n, x):
     P_n = jax.lax.fori_loop(2, n+1, body, (P_n_minus_1, P_n))[1]
     return jnp.where(n == 0, P_n_minus_1, jnp.where(n == 1, x, P_n))
 
-def generate_multi_indices(l, d):
+def generate_total_degree_multi_indices(l, d):
     indices = set()
     for comb in combinations_with_replacement(range(l + 1), d):
         if sum(comb) <= l:

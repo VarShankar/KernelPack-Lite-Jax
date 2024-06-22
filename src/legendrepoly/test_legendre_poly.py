@@ -6,7 +6,7 @@ from scipy.special import roots_legendre
 # Example usage
 def vandermonde_test(l=2,d=2):
     print("\nxxxxxxxxx Testing Legendre-Vandermonde matrix xxxxxxxxxxx")
-    multi_indices = lg.generate_multi_indices(l, d)
+    multi_indices = lg.generate_total_degree_multi_indices(l, d)
     xs = jnp.array([[0.0, 0.0], [0.5, -0.5]])  
     vandermonde_matrix = lg.total_degree_legendre_poly(xs, multi_indices)    
     print(vandermonde_matrix)    
@@ -15,7 +15,7 @@ def vandermonde_test(l=2,d=2):
 def interpolation_test(xs, xe, l=2,d=1,N=2,f = lambda x: 1./(1+ 25*x**2)):
     print("\nxxxxxxxxx Testing interpolation xxxxxxxxxxxxxxxxxxxxxxxxxx")
     #Get multi indices
-    multi_indices = lg.generate_multi_indices(l,d)
+    multi_indices = lg.generate_total_degree_multi_indices(l,d)
 
     #Build the Vandermonde matrix
     V = lg.total_degree_legendre_poly(xs,multi_indices)
