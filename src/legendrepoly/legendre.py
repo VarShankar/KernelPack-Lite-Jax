@@ -1,7 +1,7 @@
 import jax
 import jax.numpy as jnp
 from jax import grad, vmap, jit
-from itertools import combinations_with_replacement, permutations
+from itertools import combinations_with_replacement, permutations, product
 
 
 @jit
@@ -26,11 +26,29 @@ def generate_total_degree_multi_indices(l, d):
     indices = sorted(indices, key=lambda x: (sum(x), x[::-1]))
     return jnp.array(indices)
 
+def generate_tensor_product_multi_indices(l, d):
+    indices = list(product(range(l + 1), repeat=d))
+    indices = sorted(set(indices), key=lambda x: (sum(x), x[::-1]))
+    return jnp.array(indices)
+
+
+def generate_hyperbolic_cross_multi_indices(l, d):
+    indices = set()
+    for comb in product(range(l + 1), repeat=d):
+        if comb.count(0) != d and jnp.prod(jnp.array([x for x in comb if x != 0])) <= l:
+            indices.add(comb)
+    
+    indices = sorted(set(indices)
+                     , key=lambda x: (sum(x), x[::-1]))
+    return jnp.array(indices)
+
+
+
 def poly_eval(degrees, some_poly, x):
     legendre_values = [some_poly(degree, x[i]) for i, degree in enumerate(degrees)]
     return jnp.prod(jnp.array(legendre_values), axis=0)
 
-def total_degree_legendre_poly(xs, multi_indices):
+def legendre_poly_eval(xs, multi_indices):
     def vandermonde_single_point(x):
         return vmap(lambda degrees: poly_eval(degrees, legendre_poly, x))(multi_indices)
     
