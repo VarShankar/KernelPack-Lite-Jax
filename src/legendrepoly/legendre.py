@@ -38,8 +38,7 @@ def generate_hyperbolic_cross_multi_indices(l, d):
         if comb.count(0) != d and jnp.prod(jnp.array([x for x in comb if x != 0])) <= l:
             indices.add(comb)
     
-    indices = sorted(set(indices)
-                     , key=lambda x: (sum(x), x[::-1]))
+    indices = sorted(indices, key=lambda x: (sum(x), x[::-1]))
     return jnp.array(indices)
 
 
