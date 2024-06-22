@@ -47,18 +47,13 @@ def poly_eval(degrees, some_poly, x):
     legendre_values = [some_poly(degree, x[i]) for i, degree in enumerate(degrees)]
     return jnp.prod(jnp.array(legendre_values), axis=0)
 
+
 def legendre_poly_eval(xs, multi_indices):
     def vandermonde_single_point(x):
         return vmap(lambda degrees: poly_eval(degrees, legendre_poly, x))(multi_indices)
     
     vandermonde = vmap(vandermonde_single_point)(xs)
     return vandermonde
-
-    
-# def gauss_legendre_zeros_1d(n):
-#     #Calculate the zeros of the nth degree Legendre polynomial (Gauss-Legendre nodes)."""
-#     zeros, _ = roots_legendre(n)
-#     return zeros
 
 def tensor_product_grid(ndims, n, univariate_grid_func):
     #Generate tensor-product Legendre zeros for a given number of dimensions and polynomial order."""

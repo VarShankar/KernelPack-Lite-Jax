@@ -42,10 +42,9 @@ def total_degree_interpolation(xs, xe, l=2,d=1,N=2,f = lambda x: 1./(1+ 25*x**2)
 
 def test_total_degree_interpolation():
     # Total degree approximation test
-    degree = 10
-    dim = 2
-    #N = math.comb(degree+dim,dim)
-    N = jnp.pow(degree+1,dim)
+    degree = 80
+    dim = 1
+    N = math.comb(degree+dim,dim)    
     Ne = 1000
 
     #Get a grid
@@ -57,3 +56,5 @@ def test_total_degree_interpolation():
 
     f = lambda x: 1./(1+ 25*x**2)
     total_degree_interpolation(xs,xe, degree,dim,N, f)
+
+test_total_degree_interpolation()
